@@ -94,10 +94,8 @@ class TableEngine:
         return results
 
     def __get_cell_value(self, cell_element):
-
         urls = self.__get_urls_inside_cell(cell_element)
         texts = self.__get_texts_in_cell(cell_element)
-
 
         for text in texts:
             url_contents = [url["content"] for url in urls]
@@ -107,7 +105,6 @@ class TableEngine:
                 # print("MATCH!")
                 matching_url_index = url_urls.index(text["content"])
                 text["url"] = urls[matching_url_index]["url"]
-
 
         for url in urls:
             text_contents = [text["content"] for text in texts]
@@ -125,16 +122,14 @@ class TableEngine:
             }
 
             texts.append(cell_content)
-                
+        
         return texts
 
     def get_table(self):
-
         # Step 1: Get all rows
         rows = self.__get_all_rows()
 
         results = []
-
         # Step 2: Get all field values in row
         for index, row in enumerate(rows):
             columns = row.select(self.td_selector)
