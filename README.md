@@ -1,4 +1,4 @@
-# ArcLeaps - LeAPS Data Archival Engine
+# ArcLeaps - LEAPS Data Archival Engine
 
 ArcLeaps is a software specifically built for archiving data from Leaps (A campus' student portal). 
 
