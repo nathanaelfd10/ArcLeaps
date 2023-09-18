@@ -46,7 +46,6 @@ class ArchivalEngine:
             os.makedirs(dir)
 
     def get_all_courses_from_all_academic_period(self):
-
         current_year = int(datetime.now().strftime("%Y"))
 
         courses = []
