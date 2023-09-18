@@ -23,8 +23,8 @@ class ArchivalEngine:
     def year_id_to_academic_year(self, academic_year_id: int):
         lowest_start_year = datetime.strptime("2014", "%Y")
 
-        start_year = lowest_start_year.replace(year=lowest_start_year.year + (academic_year_id - 22)).strftime("%Y")
-        end_year = lowest_start_year.replace(year=lowest_start_year.year + (academic_year_id - 21)).strftime("%Y")
+        start_year = lowest_start_year.replace(year=lowest_start_year.year + (academic_year_id - self.LEAPS_MIN_ACADEMIC_YEAR_ID)).strftime("%Y")
+        end_year = lowest_start_year.replace(year=lowest_start_year.year + (academic_year_id - (self.LEAPS_MIN_ACADEMIC_YEAR_ID - 1))).strftime("%Y")
 
         year_formatted = "{start_year}/{end_year}".format(start_year=start_year, end_year=end_year)
         return year_formatted
@@ -51,7 +51,7 @@ class ArchivalEngine:
 
         courses = []
 
-        for iter_year in range(self.LEAPS_MIN_ACADEMIC_YEAR, current_year):
+        for iter_year in range(self.LEAPS_MIN_ACADEMIC_YEAR, current_year + 1):
             year_dt = datetime.strptime(str(iter_year), "%Y")
             academic_year_start = int(year_dt.strftime("%Y"))
             academic_year_end = int(year_dt.replace(year = year_dt.year + 1).strftime("%Y"))
@@ -110,7 +110,6 @@ class ArchivalEngine:
                     filename = "{filename}.{file_type}".format(filename = str(attached_file["title"]), file_type = str(attached_file["file_type"]))
 
                     # Replaces all '/' to '-' in order to not confuse the filepaths.
-                    # Trust issue mode: on
                     partition_dir = self.__get_output_dir(academic_year_start, academic_year_end, semester_type)
                     partition_by_session_dir = os.path.join(partition_dir, self.remove_forbidden_characters(course_name), self.remove_forbidden_characters(session_name), self.remove_forbidden_characters(tlm["field_name"]))
                     output_file_path = os.path.join(partition_by_session_dir, self.remove_forbidden_characters(filename))
